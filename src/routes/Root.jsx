@@ -14,7 +14,6 @@ function Root() {
   const [loading,setLoading] = useState(false);
   const [searchMode,setSearchMode] = useState(false);
   const heightRef = useRef();
-
 const navigate = useNavigate();
 
 const logoutUser = async (e) => {
@@ -70,7 +69,10 @@ setLoading(false);
 //infinite scroll
 const onscroll = () => {
     const scrolledTo = window.scrollY + window.innerHeight
-  const isReachBottom = document.body.scrollHeight === scrolledTo
+    setScrolledTo(scrolledTo);
+   console.log("Scrolled to:"+scrolledTo +"  scrollHeight:"+document.body.scrollHeight)
+   
+  const isReachBottom = (document.body.scrollHeight-1) <= Math.round(scrolledTo)
   if (isReachBottom) {
     setPage((prevPage)=>prevPage+1);// Trigger loading of new posts by changing page number 
   } 
@@ -113,15 +115,13 @@ useEffect(()=>{
           <div id="search-container">
             <input type="text" name="" id="search-input" placeholder="Search cat"
             onChange={event=>setQuery(event.target.value)} />
-            {/* {console.log(query)} */}
-            
             <button className="button-19" onClick={searchClick}><i class="fa-solid fa-magnifying-glass"></i></button>
             
           </div>
      
           <details>
               <summary>
-                <i id="profile-icon" class="fa-regular fa-user"></i>
+                <i id="profile-icon" className="fa-regular fa-user"></i>
               </summary>
               <ul>
                 {!isLoggedIn && <li onClick={e=>navigate("/login")}>Login</li>}
@@ -139,6 +139,7 @@ useEffect(()=>{
         <Grid gridImages={gridImages}
               heightRef={heightRef}
               loading={loading}/>
+  
       <code>Scroll down for more cat images!</code>
       <div id="footer">Footer</div> 
       </div>
@@ -146,6 +147,5 @@ useEffect(()=>{
     </div>
   );
 }
-// ref={posts.length === index + 1 ? lastPostElementRef : null}
-//ref={lastPostElementRef}
+
 export default Root;

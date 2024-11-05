@@ -101,11 +101,10 @@ const Preview=()=>{
       },2300);    
     }
 
-    console.log("line108:",isFavourite)
     const favIconClass = isFavourite?'fa-solid':'fa-regular'
     return (
     <div id="preview-cat">
-        {isVisible && <span id="fav-alert">{!currentUser? "Login to add to favourites":isFavourite?"Added to favourites!" :"Removed from favourites."}</span>}
+        {isVisible && <span id="fav-alert">{!currentUser.email? "Login to add to favourites":isFavourite?"Added to favourites!" :"Removed from favourites."}</span>}
         <div id="preview-left">
         <img
             key={cat.id}
@@ -118,9 +117,7 @@ const Preview=()=>{
               <h2>{cat.breeds[0].name}</h2>
               <i className={`${favIconClass} fa-star star-icon`}> </i>
               </div>
-              
-             {/* {isFavourite?<AlertMessage/>:<AlertMessage/>} */}
-              {/* <i class="fa-regular fa-star"></i> */}
+            
               <p>{cat.breeds[0].description}</p>
               <div className="stat-container">
                     <span>Energy Level</span>
