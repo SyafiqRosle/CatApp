@@ -56,22 +56,13 @@ const getImages = async(page,limit)=>{
 const loadMoreImages = useCallback(async ()=>{
 setLoading(true);
 const newImages = await getImages(page,10);
-// if (newImages.length==0){
-//   console.log("no more")
-//   setHasMore(false);
-// }else{
   addtoGridImages((prevImages)=>[...prevImages,...newImages])
-// }
-
 setLoading(false);
 },[page]);
 
 //infinite scroll
 const onscroll = () => {
     const scrolledTo = window.scrollY + window.innerHeight
-    setScrolledTo(scrolledTo);
-   console.log("Scrolled to:"+scrolledTo +"  scrollHeight:"+document.body.scrollHeight)
-   
   const isReachBottom = (document.body.scrollHeight-1) <= Math.round(scrolledTo)
   if (isReachBottom) {
     setPage((prevPage)=>prevPage+1);// Trigger loading of new posts by changing page number 
@@ -82,7 +73,6 @@ const onscroll = () => {
 };
 
 useEffect(()=>{
-  
   if(searchMode===false){
     loadMoreImages();
     console.log('page='+page);
@@ -115,7 +105,7 @@ useEffect(()=>{
           <div id="search-container">
             <input type="text" name="" id="search-input" placeholder="Search cat"
             onChange={event=>setQuery(event.target.value)} />
-            <button className="button-19" onClick={searchClick}><i class="fa-solid fa-magnifying-glass"></i></button>
+            <button className="button-19" onClick={searchClick}><i className="fa-solid fa-magnifying-glass"></i></button>
             
           </div>
      

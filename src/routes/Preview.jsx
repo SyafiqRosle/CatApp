@@ -84,15 +84,14 @@ const Preview=()=>{
       } 
     }    
     
-  
-   
- 
     const favClick = (event) =>{
       setVisible(true);
-      if(isFavourite===false){
-        addFav(event);
-      }else{
-        removeFav(event);
+      if(currentUser.email){
+        if(isFavourite===false){
+          addFav(event);
+        }else{
+          removeFav(event);
+        }
       }
       setFavourite(!isFavourite);  
       
