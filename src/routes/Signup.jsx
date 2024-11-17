@@ -1,4 +1,5 @@
 import  { useState } from "react";
+import pusheen from '../assets/pusheen.png'
 import { auth } from "../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
@@ -28,6 +29,9 @@ const Signup = () => {
 
     return(
         <div className = "container">
+            <header className="App-header">
+                <h1>Catpedia</h1> <img className="App-logo"src={pusheen} alt=''/>
+            </header>
             <div className = "row justify-content-center">
                 <form className = "col-md-4 mt-3 pt-3 pb-3">
                     { "" !== notice &&
@@ -37,7 +41,7 @@ const Signup = () => {
                     }
                     <div className = "form-floating mb-3">
                         <input id = "signupEmail" type = "email" className = "form-control" aria-describedby = "emailHelp" placeholder = "name@catmail.com" value = { email } onChange = { (e) => setEmail(e.target.value) }></input>
-                        <label htmlFor = "signupEmail" className = "form-label">Enter an email address for your username</label>
+                        <label htmlFor = "signupEmail" className = "form-label">Enter an email address for your username </label>
                     </div>
                     <div className = "form-floating mb-3">
                         <input id = "signupPassword" type = "password" className = "form-control" placeholder = "Password" value = { password } onChange = { (e) => setPassword(e.target.value) }></input>
@@ -48,7 +52,7 @@ const Signup = () => {
                         <label htmlFor = "confirmPassword" className = "form-label">Confirm Password</label>
                     </div>                    
                     <div className = "d-grid">
-                        <button type = "submit" className = "btn btn-primary pt-3 pb-3" onClick = {(e) => signupWithUsernameAndPassword(e)}>Signup</button>
+                        <button type = "submit" id="login-button" className = "button-19" onClick = {(e) => signupWithUsernameAndPassword(e)}>Signup</button>
                     </div>
                     <div className = "mt-3 text-center">
                         <span>Go back to login? <Link to = "/login">Click here.</Link></span>

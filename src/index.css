@@ -155,8 +155,6 @@ details summary{
   height:auto;
 }
 
-
-
 #grid{
   padding: 1em 4em;
   display:column;
@@ -174,16 +172,9 @@ details summary{
 }
 .col{
   overflow: hidden;
-  /* flex-basis:content; */
-   /* flex:auto; */
-    /*set to aspect ratio */
-/* background-color: white; */
-border-radius:16px;
-/* filter: drop-shadow(6px 11px 6px #0000007e); */
+  border-radius:16px;
+
 }
-
-
-/*  */
 
 .cat{
   object-fit:cover;
@@ -193,19 +184,9 @@ border-radius:16px;
   height: auto;
   
 }
-
-
-
 .cat:hover{
   filter:brightness(50%);
 }
-
-/* .cat:active {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(2); 
-} */
 
 
 .cat-text{
@@ -217,17 +198,10 @@ border-radius:16px;
  justify-content: flex-start;
 }
 
-
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#login-button{
+  width:100%;
+  margin:0;
 }
-
 .button-19 {
   appearance: button;
   background-color: #e0461f;
@@ -298,6 +272,24 @@ border-radius:16px;
 margin-bottom: 100px;
 }
 
+@keyframes progress-anim{
+  from{
+    transform:scaleX(0);
+  }
+  to{
+    transform:scaleX(1);
+  }
+}
+@keyframes fade-in{
+  from{
+    opacity: 0;
+    transform: translateY(-5%);
+  }
+  to{
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 @keyframes fade-in-out{
   from{
     opacity: 0;
@@ -312,20 +304,23 @@ margin-bottom: 100px;
     transform: translate(-50%,-50%);
   }
 }
-
-#fav-alert{
+.alert-pop{
   position:absolute;
-  background-color: #121212;
-  width: 14em;
+
   text-align: center;
   /* width:15em; */
   color: #fff;
   top: 0%;
-  left:50%;
-  transform: translate(-50%,-50%);
   border-radius:10px;
   padding: 15px;
+}
+
+#fav-alert{
+  left:50%;
+  background-color: #121212;
+  width: 14em;
   box-shadow: rgba(0, 0, 0, 0.5) 5px 4px 8px 1px;
+  transform: translate(-50%,-50%);
   animation: 2.5s fade-in-out   cubic-bezier(0.68,-0.55,0.27,1.55);
   /*ease in    cubic-bezier(0.6,-0.28,0.74,0.05);*/
   /*easeinout   cubic-bezier(0.68,-0.55,0.27,1.55);    */
@@ -333,10 +328,9 @@ margin-bottom: 100px;
 }
 
 
-
 #preview-cat{
   background-color: white;
-  width: 50em;
+  width: 55em;
   height:fit-content;
   border-radius:32px;
   display:flex;
@@ -365,8 +359,19 @@ margin-bottom: 100px;
 #preview-right{
   flex-basis: 50%;
   padding: 0em 2em;
+  position:relative;
+  animation: 1s fade-in   cubic-bezier(0.68,-0.55,0.27,1.55);
  }
-
+ .origin{
+  display: flex;
+  align-items: center;
+ }
+.fi{
+  margin-left:5px;
+  font-size: 2em;
+  border-radius:3px;
+  
+}
  #preview-right-header {
   display:flex;
   justify-content: space-between;
@@ -380,15 +385,25 @@ margin-bottom: 100px;
   margin:0;
  }
 
- .star-icon{
+ .icons{
   font-size:1.5em;
-  color:#ff5927;
   cursor:pointer;
+  display:flex;
+  align-items: center;
  }
+ .star-icon{
+  color:#ff5927;
+ }
+ .menu-icon{
+  margin-left: 15px;
+ color:#ff5927;
+}
 
 .stat-container{
   padding:5px;
 }
+
+
 .stat-bar{
   background: #dadada;
   padding:6px;
@@ -400,9 +415,8 @@ margin-bottom: 100px;
   background-color: #ff5927;
   padding:3px;
   border-radius:25px;
-  
-  
   display: block;
+  animation: 0.8s progress-anim   cubic-bezier(0.6,-0.28,0.74,0.05);
 }
  
 #last-elem{
@@ -445,6 +459,15 @@ margin-bottom: 100px;
   } */
 }
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen   and (max-width: 800px){
+  #preview-cat{
+    flex-direction: column;
+  }
+  #preview-left > img{
+   border-radius:32px 32px 0 0 ;
+  }
+
+}
 @media screen and (max-width: 600px) {
 
   #grid{
@@ -468,10 +491,5 @@ margin-bottom: 100px;
   .App-logo {
     height: 8vw;
   }
-  #preview-cat{
-     flex-direction: column;
-   }
-   #preview-left > img{
-    border-radius:32px 32px 0 0 ;
-   }
+  
 }

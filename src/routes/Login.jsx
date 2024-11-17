@@ -1,4 +1,5 @@
 import { useState } from "react";
+import pusheen from '../assets/pusheen.png';
 import { auth } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
@@ -22,6 +23,9 @@ const Login = () => {
 
     return(
         <div className = "container">
+            <header className="App-header">
+                <h1>Catpedia</h1> <img className="App-logo"src={pusheen} alt=''/>
+            </header>
             <div className = "row justify-content-center">
                 <form className = "col-md-4 mt-3 pt-3 pb-3">
                     { "" !== notice &&
@@ -38,7 +42,7 @@ const Login = () => {
                         <label htmlFor = "exampleInputPassword1" className = "form-label">Password</label>
                     </div>
                     <div className = "d-grid">
-                        <button type = "submit" className = "btn btn-primary pt-3 pb-3" onClick = {(e) => loginWithUsernameAndPassword(e)}>Submit</button>
+                        <button type = "submit" id="login-button" className = "button-19" onClick = {(e) => loginWithUsernameAndPassword(e)}>Submit</button>
                     </div>
                     <div className = "mt-3 text-center">
                         <span >Need to sign up for an account? <Link to = "/signup">Click here.</Link></span>
