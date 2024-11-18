@@ -58,6 +58,7 @@ const Profile = () => {
               </summary>
               <ul>
                 <li onClick={e=>navigate("/")}>Home</li>
+                <li onClick={e=>navigate("/catgif")}>Cat GIFs</li>
                 <li onClick={e=>logoutUser(e)}>Sign Out</li>
               </ul>
             </details>
@@ -67,7 +68,7 @@ const Profile = () => {
                 <div className = "col-md-4 text-center">
                             <h2>Your Profile</h2>
                            <img src={`https://robohash.org/${catUser.uid}?set=set4`} alt="" />
-                           <p>{ catUser.email }</p>
+                           <h5>{ catUser.email }</h5>
                 </div>
             </div>
             
@@ -77,7 +78,6 @@ const Profile = () => {
                 {favCatImg.map((favImg,i)=>
                   <div className="col" key={i} >
                                         <img key={i} className="cat" src={`https://cdn2.thecatapi.com/images/${favImg}.jpg`} alt=""/>
-                                        {/* <div className="cat-text"><p>Cat</p></div> */}
                   </div>)}
                 </div>   
             </div>

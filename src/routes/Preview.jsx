@@ -20,7 +20,7 @@ const Preview=()=>{
     const [isShowMorePopupVisible,setShowMorePopupVisible] = useState(false);
     const {cat} = useLoaderData();
     const [currentUser, setCurrentUser] = useState({});
-
+    const [showPreviewAnimationClass, setShowPreviewAnimationClass] = useState(); 
     useEffect(()=>{
       //initially undisplay favourite every transition
       setFavourite(false);
@@ -87,12 +87,14 @@ const Preview=()=>{
       } 
     }    
     const showMoreClick = (e)=>{
-      setShowMorePopupVisible(!isShowMorePopupVisible)
+      setShowMorePopupVisible(!isShowMorePopupVisible);
+      //animate on show more click
+      setShowPreviewAnimationClass("preview-right-anim");
     }
     const PreviewContent =()=>{
-      if (isShowMorePopupVisible){
+      if (!isShowMorePopupVisible){
         return(
-          <div id="preview-right">          
+          <div className={`preview-right ${showPreviewAnimationClass}`}>          
               <div id="preview-right-header">
                 <h2>{cat.breeds[0].name}</h2>
                 <div className="icons">
@@ -124,7 +126,7 @@ const Preview=()=>{
           </div>);
     }else{
       return(
-        <div id="preview-right">
+        <div className={`preview-right ${showPreviewAnimationClass}`}>     
                 <div id="preview-right-header" >
                 <h2>{cat.breeds[0].name}</h2>
                 <div className="icons">
@@ -154,6 +156,10 @@ const Preview=()=>{
     }
     const favClick = (event) =>{
       setFavAlertVisible(true);
+
+      //dont animate on fav click
+      setShowPreviewAnimationClass("");
+
       if(currentUser.email){
         if(isFavourite===false){
           addFav(event);

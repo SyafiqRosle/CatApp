@@ -4,6 +4,7 @@ import Root from './routes/Root.jsx'
 import Login from "./routes/Login";
 import Signup from "./routes/Signup";
 import Profile from "./routes/Profile";
+import CatGifPage from "./routes/CatGifPage.jsx";
 import ErrorPage from './error-page'
 import Preview,{loader as previewLoader} from './routes/Preview.jsx'
 import './index.css'
@@ -34,6 +35,11 @@ const router = createBrowserRouter([{
 {
   path:"/profile",
   element:<Profile/>,
+  errorElement : <ErrorPage/>,
+},
+{
+  path:"/catgif",
+  element:<CatGifPage/>,
   errorElement : <ErrorPage/>,
 }
 ])

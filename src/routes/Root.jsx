@@ -6,6 +6,7 @@ import {signOut,onAuthStateChanged} from "firebase/auth";
 import { auth } from "../firebase";
 import Grid from './Grid';
 
+//todo:re-enable infinite scroll on image click
 function Root() {
   const [gridImages, addtoGridImages]  = useState([]);
   const [query,setQuery] = useState("");
@@ -25,9 +26,10 @@ const logoutUser = async (e) => {
 
 const searchClick = async() => {
   window.removeEventListener("scroll", onscroll);
-  setSearchMode(true);
   //clear grid
   if (query.length==0) return;
+  //remove infinite scroll on search click
+  setSearchMode(true);
   addtoGridImages([]);
   try{
     const data = await((await fetch(`https://api.thecatapi.com/v1/breeds/search?q=${query}&attach_image=1`))).json()
@@ -95,7 +97,6 @@ useEffect(()=>{
   return (
     <div className="App">
       <header className="App-header">
-      {/* <button className="button-19" onClick={event=>{setSearchMode(false)}}>←</button> */}
       <h1>Catpedia</h1>
       
       <img
@@ -116,6 +117,7 @@ useEffect(()=>{
               <ul>
                 {!isLoggedIn && <li onClick={e=>navigate("/login")}>Login</li>}
                 {!isLoggedIn && <li onClick={e=>navigate("/signup")}>Sign Up</li>}
+                {<li onClick={e=>navigate("/catgif")}>Cat GIFs</li>}
                 {isLoggedIn && <li onClick={e=>navigate("/profile")}>Profile</li>}
                 {isLoggedIn && <li onClick={e=>logoutUser(e)}>Sign Out</li>}
               </ul>
@@ -131,9 +133,7 @@ useEffect(()=>{
               loading={loading}/>
   
       <code>Scroll down for more cat images!</code>
-      <div id="footer">Footer</div> 
       </div>
-      
     </div>
   );
 }

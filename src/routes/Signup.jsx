@@ -41,7 +41,8 @@ const Signup = () => {
                     }
                     <div className = "form-floating mb-3">
                         <input id = "signupEmail" type = "email" className = "form-control" aria-describedby = "emailHelp" placeholder = "name@catmail.com" value = { email } onChange = { (e) => setEmail(e.target.value) }></input>
-                        <label htmlFor = "signupEmail" className = "form-label">Enter an email address for your username </label>
+                        <label htmlFor = "signupEmail" className = "form-label">Enter email address&#40; eg&#58;xxx&#64;catmail&#46;com &#41;
+  </label>
                     </div>
                     <div className = "form-floating mb-3">
                         <input id = "signupPassword" type = "password" className = "form-control" placeholder = "Password" value = { password } onChange = { (e) => setPassword(e.target.value) }></input>
