@@ -2,15 +2,13 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { auth,db } from "../firebase";
 import {doc,getDoc} from "firebase/firestore"
-// import {getFavCats} from '../cats';
-import { signOut ,onAuthStateChanged} from "firebase/auth";
+import { onAuthStateChanged} from "firebase/auth";
 import pusheen from '../assets/pusheen.png'
+import Menu from './Menu';
 
 const Profile = () => {
     const [catUser,setCatUser] = useState({});
     const [favCatImg, setFavCatImgs] = useState([]);
-    const navigate = useNavigate();
-   
 
   const getFavCats = async(user)=>{
       try{
@@ -23,20 +21,11 @@ const Profile = () => {
       } 
   }    
 
-    const logoutUser = async (e) => {
-        e.preventDefault();
-
-        await signOut(auth);
-        navigate("/");
-    }
-
     useEffect(()=>{
       const unsubscribe = onAuthStateChanged(auth,(user)=>{
         if (user){
           setCatUser(user);
-          console.log(user.email);
           getFavCats(user);
-          console.log(favCatImg);
         }else{
           console.log("not signed in")
       }})
@@ -52,16 +41,7 @@ const Profile = () => {
                 className="App-logo"
                 src={pusheen}
                 alt=''/>
-            <details>
-              <summary>
-                <i id="profile-icon" className="fa-regular fa-user"></i>
-              </summary>
-              <ul>
-                <li onClick={e=>navigate("/")}>Home</li>
-                <li onClick={e=>navigate("/catgif")}>Cat GIFs</li>
-                <li onClick={e=>logoutUser(e)}>Sign Out</li>
-              </ul>
-            </details>
+            <Menu isLoggedIn={true}/>
             </header>
 
             <div className = "row justify-content-center">

@@ -1,22 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import { useState,useEffect,useCallback} from 'react';
 import { auth} from "../firebase";
-import { signOut ,onAuthStateChanged} from "firebase/auth";
-import pusheen from '../assets/pusheen.png'
+import { onAuthStateChanged} from "firebase/auth";
+import pusheen from '../assets/pusheen.png';
+import Menu from './Menu';
 
 const CatGifPage = () => {
     const [page,setPage] = useState(1);
     const [loading,setLoading] = useState(false);
     const [isLoggedIn,setLoginStatus] = useState(false);
     const [catGifs, setCatGifs] = useState([]);
-    const navigate = useNavigate();
-
-    const logoutUser = async (e) => {
-        e.preventDefault();
-        setLoginStatus(false);
-        await signOut(auth);
-        navigate("/");
-      }
 
     const getGifs = async(page,limit)=>{ 
         const response =
@@ -64,29 +57,14 @@ const CatGifPage = () => {
     return(
         <div className = "container">
             <header className="App-header">
-      
             <h1>Catpedia</h1>
-      
             <img
                 className="App-logo"
                 src={pusheen}
                 alt=''/>
-            <details>
-              <summary>
-                <i id="profile-icon" className="fa-regular fa-user"></i>
-              </summary>
-              <ul>
-              <li onClick={e=>navigate("/")}>Home</li>
-              {!isLoggedIn && <li onClick={e=>navigate("/login")}>Login</li>}
-                {!isLoggedIn && <li onClick={e=>navigate("/signup")}>Sign Up</li>}
-                {isLoggedIn && <li onClick={e=>navigate("/profile")}>Profile</li>}
-                {isLoggedIn && <li onClick={e=>logoutUser(e)}>Sign Out</li>}
-              </ul>
-            </details>
+              <Menu isLoggedIn={isLoggedIn}/>
             </header>
-
-         
-            
+ 
             <div className = "row">
                 <h2 className="poppins">Cat GIFs</h2>
                 <div id = "gif-grid">

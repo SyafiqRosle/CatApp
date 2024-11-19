@@ -23,6 +23,17 @@ const router = createBrowserRouter([{
     },
   ]
 },{
+  path:"/search",
+  element:<Root/>,
+  errorElement : <ErrorPage/>,
+  children:[
+    {
+      path:"/search/cats/:catId",
+      element:<Preview/>,
+      loader:previewLoader
+    },
+  ]
+},{
   path:"/login",
   element:<Login/>,
   errorElement : <ErrorPage/>,

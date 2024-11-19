@@ -1,35 +1,28 @@
 // import './App.css';
-import {useNavigate,ScrollRestoration,Outlet} from "react-router-dom"
+import {useNavigate,useLocation,ScrollRestoration,Outlet} from "react-router-dom"
 import pusheen from '../assets/pusheen.png'
 import { useState,useEffect,useRef,useCallback} from 'react';
-import {signOut,onAuthStateChanged} from "firebase/auth";
+import {onAuthStateChanged} from "firebase/auth";
 import { auth } from "../firebase";
 import Grid from './Grid';
+import Menu from './Menu';
 
-//todo:re-enable infinite scroll on image click
 function Root() {
   const [gridImages, addtoGridImages]  = useState([]);
   const [query,setQuery] = useState("");
   const [page,setPage] = useState(1);
   const [isLoggedIn,setLoginStatus] = useState(false);
   const [loading,setLoading] = useState(false);
-  const [searchMode,setSearchMode] = useState(false);
   const heightRef = useRef();
-const navigate = useNavigate();
+  const navigate = useNavigate();
+  let location = useLocation();
 
-const logoutUser = async (e) => {
-  e.preventDefault();
-  setLoginStatus(false);
-  await signOut(auth);
-  navigate("/");
-}
 
 const searchClick = async() => {
   window.removeEventListener("scroll", onscroll);
   //clear grid
   if (query.length==0) return;
   //remove infinite scroll on search click
-  setSearchMode(true);
   addtoGridImages([]);
   try{
     const data = await((await fetch(`https://api.thecatapi.com/v1/breeds/search?q=${query}&attach_image=1`))).json()
@@ -45,6 +38,7 @@ const searchClick = async() => {
   }catch(err){
     console.log(err.message)
   }
+  navigate('/search')
 }
 
 //root grid
@@ -52,7 +46,6 @@ const getImages = async(page,limit)=>{
     const response =
      await(await fetch(`https://api.thecatapi.com/v1/images/search?limit=${limit}&has_breeds=true&page=${page}&api_key=${process.env.REACT_APP_API_KEY}`)).json()   
     return response;
-     // addtoGridImages(response);
 }
 
 const loadMoreImages = useCallback(async ()=>{
@@ -74,8 +67,9 @@ const onscroll = () => {
   };
 };
 
-useEffect(()=>{
-  if(searchMode===false){
+useEffect(()=>{ 
+  //disable infinite scroll on search page,but renenable on preview mode
+  if(!location.pathname.endsWith("/search")){
     loadMoreImages();
     console.log('page='+page);
     console.log(gridImages);
@@ -83,11 +77,9 @@ useEffect(()=>{
     const unsubscribe = onAuthStateChanged(auth,(user)=>{
       if (user){
         setLoginStatus(true);
-        console.log("is logged in");
         
       }else{
         setLoginStatus(false);
-        console.log("not signed in")
     }})
     return unsubscribe;
   }
@@ -109,19 +101,7 @@ useEffect(()=>{
             <button className="button-19" onClick={searchClick}><i className="fa-solid fa-magnifying-glass"></i></button>
             
           </div>
-     
-          <details>
-              <summary>
-                <i id="profile-icon" className="fa-regular fa-user"></i>
-              </summary>
-              <ul>
-                {!isLoggedIn && <li onClick={e=>navigate("/login")}>Login</li>}
-                {!isLoggedIn && <li onClick={e=>navigate("/signup")}>Sign Up</li>}
-                {<li onClick={e=>navigate("/catgif")}>Cat GIFs</li>}
-                {isLoggedIn && <li onClick={e=>navigate("/profile")}>Profile</li>}
-                {isLoggedIn && <li onClick={e=>logoutUser(e)}>Sign Out</li>}
-              </ul>
-            </details>
+          <Menu isLoggedIn={isLoggedIn}/>
       </header>   
       <div id="body-container">
       <div id="preview-container">
